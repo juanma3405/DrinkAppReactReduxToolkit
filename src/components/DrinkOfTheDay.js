@@ -3,12 +3,14 @@ import { searchActions } from "../store/search";
 import { chosenDrinkActions } from "../store/chosenDrink";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import Error from "./Error";
 import "./DrinkOfTheDay.css";
 
 const DrinkOfTheDay = () => {
   const navigate = useNavigate();
   const drinkOfTheDay = useSelector((state) => state.randomDrink.drink);
   const selectedDrink = useSelector((state) => state.chosenDrink.drink);
+  const error = useSelector((state) => state.error.error);
   const dispatch = useDispatch();
 
   const backToList = () => {
@@ -20,6 +22,8 @@ const DrinkOfTheDay = () => {
     dispatch(chosenDrinkActions.clearChosenDrink());
     dispatch(searchActions.cleanSearch());
   };
+
+  if (error) return <Error />;
 
   if (!drinkOfTheDay) return <div className="drink-container">Loading...</div>;
 
@@ -82,10 +86,11 @@ const DrinkOfTheDay = () => {
             ))}
           </div>
           <br />
-          <button onClick={backToList}>Back to your search list </button>
-          <br />
-          <button onClick={backToDrinkOfDay}>
-            Go back to drink of the day
+          <button className="btn-style" onClick={backToList}>
+            Back to your search list{" "}
+          </button>
+          <button className="btn-style" onClick={backToDrinkOfDay}>
+            Back to drink of the day
           </button>
         </div>
       </div>

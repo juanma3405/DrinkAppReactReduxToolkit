@@ -13,9 +13,11 @@ const SearchFailed = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Sorry that drink is not on our list</h2>
-      <button onClick={backToDrinkOfDay}>Back to drink of the day </button>
+    <div className="no-results-container">
+      <h2>Sorry, that drink is not on our list</h2>
+      <button onClick={backToDrinkOfDay} className="btn-style">
+        Back to drink of the day{" "}
+      </button>
     </div>
   );
 };

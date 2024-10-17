@@ -5,6 +5,7 @@ import searchImage from "../assets/search.svg";
 import ApiDrinkService from "../services/ApiDrinkService.service";
 import { searchActions } from "../store/search";
 import { searchFailedActions } from "../store/searchFailed";
+import "./SearchBar.css";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -30,12 +31,13 @@ const SearchBar = () => {
       dispatch(searchActions.setDrinks({ drinks: searchResults }));
     } catch (error) {
       console.error("Error searching for cocktails:", error);
+      navigate("/error");
     }
     navigate("/search");
   };
 
   return (
-    <form onSubmit={handleSearch} className="center">
+    <form onSubmit={handleSearch} className="form-center">
       <input
         type="text"
         value={query}

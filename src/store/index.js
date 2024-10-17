@@ -3,6 +3,7 @@ import randomDrinkReducer from "./randomdrink";
 import searchReducer from "./search";
 import chosenDrinkReducer from "./chosenDrink";
 import searchFailedReducer from "./searchFailed";
+import errorReducer from "./error";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     search: searchReducer,
     chosenDrink: chosenDrinkReducer,
     searchFailed: searchFailedReducer,
+    error: errorReducer,
   },
 });
 
