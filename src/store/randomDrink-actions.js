@@ -1,6 +1,7 @@
 import { randomDrinkActions } from "./randomdrink";
 import { errorActions } from "./error";
 import ApiDrinkService from "../services/ApiDrinkService.service";
+import responseToDrink from "../utils/responseToDrink";
 
 export const fetchRandomDrink = () => {
   return async (dispatch) => {
@@ -8,25 +9,7 @@ export const fetchRandomDrink = () => {
       try {
         dispatch(errorActions.setError(false));
         const response = await ApiDrinkService.getRandomCocktail();
-        const drinkData = response.drinks[0];
-        const newDrink = {
-          idDrink: drinkData.idDrink,
-          name: drinkData.strDrink,
-          instructions: drinkData.strInstructions,
-          urlImage: drinkData.strDrinkThumb,
-          ingredients: [],
-          ingmeasures: [],
-        };
-        let i = 1;
-        let nroIngredient = "strIngredient" + i;
-        let nroIngMeasure = "strMeasure" + i;
-        while (drinkData[nroIngredient] != null) {
-          newDrink.ingredients.push(drinkData[nroIngredient]);
-          newDrink.ingmeasures.push(drinkData[nroIngMeasure]);
-          i++;
-          nroIngredient = "strIngredient" + i;
-          nroIngMeasure = "strMeasure" + i;
-        }
+        const newDrink = responseToDrink(response);
         dispatch(randomDrinkActions.setRandomDrink({ drink: newDrink }));
         return newDrink;
       } catch (error) {

@@ -15,4 +15,13 @@ const store = configureStore({
   },
 });
 
+store.subscribe(() => {
+  const dayDrink = store.getState().randomDrink.drink;
+  const drinks = store.getState().search.drinks;
+  const chosenDrink = store.getState().chosenDrink.drink;
+  sessionStorage.setItem("dayDrink", JSON.stringify(dayDrink));
+  sessionStorage.setItem("drinks", JSON.stringify(drinks));
+  sessionStorage.setItem("chosenDrink", JSON.stringify(chosenDrink));
+});
+
 export default store;

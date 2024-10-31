@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const searchSlice = createSlice({
   name: "search",
-  initialState: { drinks: [] },
+  initialState: {
+    drinks: JSON.parse(sessionStorage.getItem("drinks")) || [],
+  },
   reducers: {
     setDrinks(state, action) {
       state.drinks = action.payload.drinks;

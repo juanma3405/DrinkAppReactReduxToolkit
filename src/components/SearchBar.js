@@ -44,7 +44,11 @@ const SearchBar = () => {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search a cocktail..."
       />
-      <button type="submit">
+      <button
+        type="submit"
+        disabled={!query.trim()}
+        className={!query.trim() ? "disabled-button" : ""}
+      >
         <img src={searchImage} alt="Search" />
         Search
       </button>

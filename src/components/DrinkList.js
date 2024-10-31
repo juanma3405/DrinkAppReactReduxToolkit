@@ -3,46 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { chosenDrinkActions } from "../store/chosenDrink";
 import { searchActions } from "../store/search";
+import responseToDrink from "../utils/responseToDrink";
 import "./DrinkList.css";
 
 const DrinkList = () => {
+  debugger;
   const navigate = useNavigate();
   const drinks = useSelector((state) => state.search.drinks);
   const dispatch = useDispatch();
 
   const choseDrink = async (drink) => {
-    let newDrink;
     let idDrink;
     try {
       if (drink.idDrink !== undefined) {
         idDrink = drink.idDrink?.toString();
       }
       const response = await ApiDrinkService.getCocktailDetail(idDrink);
-      const drinkData = response.drinks[0];
-      newDrink = {
-        idDrink: drinkData.idDrink,
-        name: drinkData.strDrink,
-        instructions: drinkData.strInstructions,
-        urlImage: drinkData.strDrinkThumb,
-        ingredients: [],
-        ingmeasures: [],
-      };
-      let i = 1;
-      let nroIngredient = "strIngredient" + i;
-      let nroIngMeasure = "strMeasure" + i;
-      while (drinkData[nroIngredient] !== null) {
-        newDrink.ingredients.push(drinkData[nroIngredient]);
-        newDrink.ingmeasures.push(drinkData[nroIngMeasure]);
-        i++;
-        nroIngredient = "strIngredient" + i;
-        nroIngMeasure = "strMeasure" + i;
-      }
+      const newDrink = responseToDrink(response);
       dispatch(chosenDrinkActions.setChosenDrink({ drink: newDrink }));
     } catch (error) {
       console.error("Error fetching drink data: ", error);
       navigate("/error");
     }
-    navigate("/");
+    navigate("/chosenDrink");
   };
 
   const backToInit = () => {

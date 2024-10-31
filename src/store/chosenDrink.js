@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const chosenDrinkSlice = createSlice({
   name: "chosenDrink",
-  initialState: { drink: null },
+  initialState: {
+    drink: JSON.parse(sessionStorage.getItem("chosenDrink")) || null,
+  },
   reducers: {
     setChosenDrink(state, action) {
       state.drink = action.payload.drink;
